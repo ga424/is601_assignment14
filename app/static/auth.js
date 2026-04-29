@@ -89,9 +89,7 @@ async function handleSubmit(event) {
     }
 
     window.localStorage.setItem(TOKEN_KEY, payload.access_token);
-    bindStoredToken();
-    form.reset();
-    setMessage(messageElement, payload.message || "Success.", "success");
+    window.location.href = "/dashboard";
 }
 
 document.addEventListener("DOMContentLoaded", () => {
