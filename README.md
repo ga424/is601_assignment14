@@ -184,4 +184,4 @@ docker run --rm -p 8013:8013 ga424/is601_assignment14:latest
 
 - The model stores physical `a` and `b` columns for the first two operands and keeps `inputs[]` for the full request payload.
 - The documentation in `docs/` includes the C4 architecture view and a navigation index.
-- Docker Hub repository: replace `<dockerhub-username>` in the commands above with your own repository name.
+- Docker Hub repository: [hub.docker.com/r/ga424/is601_assignment14](https://hub.docker.com/r/ga424/is601_assignment14)

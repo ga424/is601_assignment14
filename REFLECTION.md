@@ -44,7 +44,7 @@
 
 ### 4. Containerization and Delivery Demonstration
 - Demonstrated Dockerized local runtime via `docker compose`.
-- Demonstrated Docker Hub image publication to `ga424/module11`.
+- Demonstrated Docker Hub image publication to `ga424/is601_assignment14`.
 - Demonstrated security scanning with Trivy:
   - local command via `./start.sh scan`
   - CI workflow scan in GitHub Actions
