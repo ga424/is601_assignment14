@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/static/auth.css">
+    <script defer src="/static/app.js"></script>
+</head>
+<body>
+    <main class="app-shell">
+        <section class="app-card">
+            <header class="app-header">
+                <div>
+                    <p class="eyebrow">FastAPI JWT Auth</p>
+                    <h1>Calculation Dashboard</h1>
+                    <p class="lede">Create calculations with your JWT and browse your latest results.</p>
+                </div>
+                <button type="button" class="ghost-button" data-logout>Logout</button>
+            </header>
+
+            <section class="token-panel token-panel-inline">
+                <p>Stored JWT</p>
+                <div class="token-value" data-token-value>No token stored yet.</div>
+            </section>
+
+            <form class="calc-form" data-calc-form novalidate>
+                <label for="calcType">Type</label>
+                <select id="calcType" name="type" required>
+                    <option value="addition">Addition</option>
+                    <option value="subtraction">Subtraction</option>
+                    <option value="multiplication">Multiplication</option>
+                    <option value="division">Division</option>
+                </select>
+
+                <label for="calcInputs">Inputs</label>
+                <input id="calcInputs" name="inputs" type="text" placeholder="10, 5, 2" required>
+
+                <button type="submit">Create Calculation</button>
+            </form>
+
+            <p class="message" role="status" aria-live="polite" data-message></p>
+
+            <section class="results-panel">
+                <div class="results-header">
+                    <h2>Recent Calculations</h2>
+                    <button type="button" class="ghost-button" data-refresh>Refresh</button>
+                </div>
+                <ul class="result-list" data-result-list>
+                    <li class="result-empty">No calculations yet.</li>
+                </ul>
+            </section>
+
+            <p class="switcher">Need to authenticate again? <a href="/login">Go to login</a></p>
+        </section>
+    </main>
+</body>
+</html>

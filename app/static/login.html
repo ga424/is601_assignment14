@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login</title>
+    <link rel="stylesheet" href="/static/auth.css">
+    <script defer src="/static/auth.js"></script>
+</head>
+<body>
+    <main class="auth-shell">
+        <section class="auth-card">
+            <p class="eyebrow">FastAPI JWT Auth</p>
+            <h1>Sign in</h1>
+            <p class="lede">Use the email and password from registration. A successful login stores a fresh JWT in local storage.</p>
+
+            <form data-auth-mode="login" novalidate>
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" autocomplete="email" placeholder="student@example.com" required>
+
+                <label for="password">Password</label>
+                <input id="password" name="password" type="password" autocomplete="current-password" placeholder="strongpassword123" required>
+
+                <button type="submit">Login</button>
+            </form>
+
+            <p class="message" role="status" aria-live="polite" data-message></p>
+
+            <div class="token-panel">
+                <p>Stored JWT</p>
+                <div class="token-value" data-token-value>No token stored yet.</div>
+            </div>
+
+            <p class="switcher nav-links">
+                <span>Need an account? <a href="/register">Register</a></span>
+                <span><a href="/dashboard">Open dashboard</a></span>
+            </p>
+        </section>
+    </main>
+</body>
+</html>

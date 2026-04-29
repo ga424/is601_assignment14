@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Register</title>
+    <link rel="stylesheet" href="/static/auth.css">
+    <script defer src="/static/auth.js"></script>
+</head>
+<body>
+    <main class="auth-shell">
+        <section class="auth-card">
+            <p class="eyebrow">FastAPI JWT Auth</p>
+            <h1>Create an account</h1>
+            <p class="lede">Register with a valid email address and a password of at least eight characters. A JWT will be saved after success.</p>
+
+            <form data-auth-mode="register" novalidate>
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" autocomplete="email" placeholder="student@example.com" required>
+
+                <label for="password">Password</label>
+                <input id="password" name="password" type="password" autocomplete="new-password" minlength="8" placeholder="strongpassword123" required>
+
+                <label for="confirmPassword">Confirm password</label>
+                <input id="confirmPassword" name="confirmPassword" type="password" autocomplete="new-password" placeholder="Repeat the password">
+
+                <button type="submit">Register</button>
+            </form>
+
+            <p class="message" role="status" aria-live="polite" data-message></p>
+
+            <div class="token-panel">
+                <p>Stored JWT</p>
+                <div class="token-value" data-token-value>No token stored yet.</div>
+            </div>
+
+            <p class="switcher nav-links">
+                <span>Already registered? <a href="/login">Log in</a></span>
+                <span><a href="/dashboard">Open dashboard</a></span>
+            </p>
+        </section>
+    </main>
+</body>
+</html>
