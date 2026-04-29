@@ -165,7 +165,9 @@ async function handleDeleteCalculation(id) {
     }
 
     const payload = await response.json().catch(() => ({}));
-    const detail = payload?.detail || "Unable to delete calculation.";
+    const detail = Array.isArray(payload?.detail)
+        ? payload.detail[0]?.msg || "Unable to delete calculation."
+        : payload?.detail || "Unable to delete calculation.";
     setMessage(messageElement, detail, "error");
 }
 
@@ -229,7 +231,9 @@ async function handleCalculationSubmit(event) {
     const payload = await response.json().catch(() => ({}));
 
     if (!response.ok) {
-        const detail = payload?.detail || "Unable to create calculation.";
+        const detail = Array.isArray(payload?.detail)
+            ? payload.detail[0]?.msg || "Unable to create calculation."
+            : payload?.detail || "Unable to create calculation.";
         setMessage(messageElement, detail, "error");
         if (response.status === 401) {
             window.localStorage.removeItem(TOKEN_KEY);
