@@ -135,5 +135,4 @@ def test_dashboard_read_update_delete_calculation(page):
     first_item.get_by_role("button", name="Delete").click()
 
     # after deletion the list should not contain the multiplication result
-    list_text = page.locator("[data-result-list]").inner_text()
-    assert "multiplication(2, 3, 4) = 24" not in list_text
+    expect(page.locator("[data-result-list]")).not_to_contain_text("multiplication(2, 3, 4) = 24")
