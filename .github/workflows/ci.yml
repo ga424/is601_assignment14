@@ -29,7 +29,7 @@ jobs:
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: module13_db
+          POSTGRES_DB: module14_db
         ports:
           - 5432:5432
         options: >-
@@ -38,7 +38,7 @@ jobs:
           --health-timeout 5s
           --health-retries 5
     env:
-      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/module13_db
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/module14_db
       JWT_SECRET_KEY: ci-test-secret-key-32-chars-minimum
     steps:
       - uses: actions/checkout@v4
@@ -62,7 +62,7 @@ jobs:
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: module13_db
+          POSTGRES_DB: module14_db
         ports:
           - 5432:5432
         options: >-
@@ -71,7 +71,7 @@ jobs:
           --health-timeout 5s
           --health-retries 5
     env:
-      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/module13_db
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/module14_db
       JWT_SECRET_KEY: ci-test-secret-key-32-chars-minimum
       PLAYWRIGHT_BASE_URL: http://127.0.0.1:8013
     steps:
