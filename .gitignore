@@ -52,3 +52,13 @@ Thumbs.db
 
 # Logs
 *.log
+app/__pycache__/__init__.cpython-314.pyc
+app/__pycache__/config.cpython-314.pyc
+app/__pycache__/database.cpython-314.pyc
+app/__pycache__/models.cpython-314.pyc
+app/__pycache__/security.cpython-314.pyc
+app/__pycache__/__init__.cpython-314.pyc
+app/__pycache__/config.cpython-314.pyc
+app/__pycache__/database.cpython-314.pyc
+app/__pycache__/models.cpython-314.pyc
+app/__pycache__/security.cpython-314.pyc
