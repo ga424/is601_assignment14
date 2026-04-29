@@ -1,38 +1,11 @@
-import os
 import re
 import uuid
 
 import pytest
-from playwright.sync_api import expect, sync_playwright
+from playwright.sync_api import expect
 
 
 pytestmark = pytest.mark.e2e
-
-
-@pytest.fixture(scope="session")
-def base_url() -> str:
-    return os.getenv("PLAYWRIGHT_BASE_URL", "http://127.0.0.1:8013")
-
-
-@pytest.fixture(scope="session")
-def playwright_driver():
-    with sync_playwright() as playwright:
-        yield playwright
-
-
-@pytest.fixture(scope="session")
-def browser(playwright_driver):
-    browser = playwright_driver.chromium.launch(headless=True)
-    yield browser
-    browser.close()
-
-
-@pytest.fixture
-def page(browser, base_url):
-    context = browser.new_context(base_url=base_url)
-    page = context.new_page()
-    yield page
-    context.close()
 
 
 def register_user(page, email: str, password: str):
@@ -139,15 +112,15 @@ def test_dashboard_read_update_delete_calculation(page):
     expect(page.get_by_role("status")).to_contain_text("Calculation created")
 
     # wait for list and grab first item
-    firstItem = page.locator('.result-item').first()
-    expect(firstItem).to_be_visible()
+    first_item = page.locator(".result-item").first
+    expect(first_item).to_be_visible()
 
     # view details
-    firstItem.get_by_role("button", name="View").click()
+    first_item.get_by_role("button", name="View").click()
     expect(page.get_by_role("status")).to_contain_text("Calculation:")
 
     # edit: switch to multiplication and new inputs
-    firstItem.get_by_role("button", name="Edit").click()
+    first_item.get_by_role("button", name="Edit").click()
     page.get_by_label("Type").select_option("multiplication")
     page.get_by_label("Inputs").fill("2, 3, 4")
     page.get_by_role("button", name="Create Calculation").click()
@@ -159,7 +132,7 @@ def test_dashboard_read_update_delete_calculation(page):
         dialog.accept()
 
     page.once("dialog", handle_dialog)
-    firstItem.get_by_role("button", name="Delete").click()
+    first_item.get_by_role("button", name="Delete").click()
 
     # after deletion the list should not contain the multiplication result
     list_text = page.locator("[data-result-list]").inner_text()

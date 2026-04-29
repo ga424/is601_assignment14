@@ -10,51 +10,14 @@ Run with:
     python -m pytest -q -m e2e tests/test_e2e_negative.py
 """
 
-import os
 import re
 import uuid
 
 import pytest
-from playwright.sync_api import expect, sync_playwright
+from playwright.sync_api import expect
 
 
 pytestmark = pytest.mark.e2e
-
-
-# ---------------------------------------------------------------------------
-# Fixtures (mirror test_e2e_auth.py pattern)
-# ---------------------------------------------------------------------------
-
-
-@pytest.fixture(scope="session")
-def base_url() -> str:
-    return os.getenv("PLAYWRIGHT_BASE_URL", "http://127.0.0.1:8013")
-
-
-@pytest.fixture(scope="session")
-def playwright_driver():
-    with sync_playwright() as playwright:
-        yield playwright
-
-
-@pytest.fixture(scope="session")
-def browser(playwright_driver):
-    browser = playwright_driver.chromium.launch(headless=True)
-    yield browser
-    browser.close()
-
-
-@pytest.fixture
-def page(browser, base_url):
-    context = browser.new_context(base_url=base_url)
-    page = context.new_page()
-    yield page
-    context.close()
-
-
-# ---------------------------------------------------------------------------
-# Helper
-# ---------------------------------------------------------------------------
 
 
 def register_user(page, email: str, password: str):
@@ -215,7 +178,7 @@ def test_dashboard_form_rejects_non_numeric_inputs(page):
 
 def test_dashboard_form_division_by_zero_shows_error(page):
     """Division by zero passes parseInputs but is rejected by the Pydantic validator
-    (HTTP 422). After the app.js fix, the error detail is surfaced in the UI."""
+    (HTTP 422). The error detail is surfaced in the UI via the app.js fix."""
     email = f"divzero-{uuid.uuid4().hex[:8]}@example.com"
     register_user(page, email, "strongpassword123")
 
@@ -254,7 +217,7 @@ def test_api_cannot_access_another_users_calculation(page, browser, base_url):
     page_a.get_by_role("button", name="Create Calculation").click()
     expect(page_a.get_by_role("status")).to_contain_text("Calculation created")
 
-    first_item = page_a.locator(".result-item").first()
+    first_item = page_a.locator(".result-item").first
     expect(first_item).to_be_visible()
     calc_id = first_item.get_attribute("data-id")
     assert calc_id, "Expected data-id attribute on result item"
