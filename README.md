@@ -1,4 +1,4 @@
-# Module 13 - JWT Auth + Calculation API
+# Module 14 - JWT Auth + Calculation API
 
 This project provides a FastAPI service with JWT-based user registration/login, calculation CRUD, PostgreSQL persistence, static login/register pages, Docker support, and CI/CD to Docker Hub.
 
@@ -9,6 +9,7 @@ This project provides a FastAPI service with JWT-based user registration/login, 
 - [Helper script](start.sh)
 - [Login page](http://127.0.0.1:8013/login)
 - [Register page](http://127.0.0.1:8013/register)
+- [Docker Hub](https://hub.docker.com/r/ga424/is601_assignment14)
 
 ## What it does
 
@@ -134,6 +135,12 @@ Run local security scan:
 ./start.sh scan
 ```
 
+## Screenshots
+
+- **CI workflow run:** `docs/ci-workflow-screenshot.png` — successful GitHub Actions run showing all three jobs (unit, integration, e2e) passing.
+- **Docker Hub deployment:** `docs/docker-hub-screenshot.png` — Docker image pushed to [hub.docker.com/r/ga424/is601_assignment14](https://hub.docker.com/r/ga424/is601_assignment14).
+- **Application front-end:** `docs/app-screenshots/` — screenshots of Browse, Read, Edit, Add, and Delete operations from the dashboard.
+
 ## CI/CD
 
 - CI workflow: `.github/workflows/ci.yml`
@@ -164,13 +171,13 @@ App URL:
 Build image only:
 
 ```bash
-docker build -t <dockerhub-username>/is601_assignment13:latest .
+docker build -t ga424/is601_assignment14:latest .
 ```
 
 Run:
 
 ```bash
-docker run --rm -p 8013:8013 <dockerhub-username>/is601_assignment13:latest
+docker run --rm -p 8013:8013 ga424/is601_assignment14:latest
 ```
 
 ## Notes

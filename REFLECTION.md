@@ -1,4 +1,25 @@
-# Module 11 Reflection
+# Module 14 Reflection
+
+## Module 14 Additions
+
+### CI/CD Workflow Architecture
+- Added three GitHub Actions workflows: `ci.yml` (unit, integration, and Playwright E2E jobs), `docker-publish.yml` (builds and pushes to Docker Hub on version tags or manual dispatch), and `security-scan.yml` (Trivy filesystem and image scans).
+- The CI workflow runs three independent jobs: unit tests use SQLite in-memory (no database needed), integration tests use a PostgreSQL 16 service container on port 5432, and E2E tests start the FastAPI app via uvicorn and poll `/health` before running Playwright.
+- The Docker publish workflow gates the image push behind a full test suite run, so a broken image is never pushed.
+
+### Negative Playwright E2E Test Strategy
+- Added `tests/test_e2e_negative.py` with 11 tests covering: duplicate registration (409), mismatched passwords (client-side), invalid email format (client-side), nonexistent login (401), wrong password (401), tampered JWT redirect, missing token redirect, single input rejection, non-numeric input rejection, division by zero (server 422), and cross-user calculation isolation (404).
+- Cross-user isolation is verified by creating a calculation as user A and confirming user B receives a 404 when accessing it directly via the API.
+
+### 422 Error Handling Fix in app.js
+- FastAPI returns `detail` as an array for 422 validation errors. The dashboard's `handleCalculationSubmit` was using `payload?.detail` directly, which rendered as `[object Object]` in the status message. Fixed to match the pattern already used in `auth.js`: check `Array.isArray(payload?.detail)` and extract `detail[0]?.msg`.
+- Applied the same fix to `handleDeleteCalculation`.
+
+### Docker Hub Publish Automation
+- The `docker-publish.yml` workflow uses `docker/metadata-action` to automatically tag images with the semver version (stripping the `v` prefix) and `latest` on every release push. The `docker/build-push-action` uses GitHub Actions layer cache to speed up subsequent builds.
+
+### Trivy Security Scanning
+- Used `aquasecurity/trivy-action@0.30.0` (action-based, not raw Docker invocation) so the Trivy vulnerability database is cached automatically across runs, avoiding the download timeout issue documented in earlier modules. Both filesystem and image scans run with `exit-code: "0"` to produce informational reports without blocking CI.
 
 ## Project Demonstrations
 
