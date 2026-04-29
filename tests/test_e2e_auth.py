@@ -41,7 +41,7 @@ def register_user(page, email: str, password: str):
     page.locator('input[name="password"]').fill(password)
     page.locator('input[name="confirmPassword"]').fill(password)
     page.get_by_role("button", name="Register").click()
-    expect(page.get_by_role("status")).to_contain_text("Registration successful")
+    expect(page).to_have_url(re.compile(r".*/dashboard$"), timeout=10_000)
     assert page.evaluate("window.localStorage.getItem('is601.jwt')")
 
 
@@ -55,7 +55,7 @@ def test_register_page_success(page):
     page.locator('input[name="confirmPassword"]').fill(password)
     page.get_by_role("button", name="Register").click()
 
-    expect(page.get_by_role("status")).to_contain_text("Registration successful")
+    expect(page).to_have_url(re.compile(r".*/dashboard$"), timeout=10_000)
     token = page.evaluate("window.localStorage.getItem('is601.jwt')")
     assert token
 
@@ -71,7 +71,7 @@ def test_login_page_success(page):
     page.locator('input[name="password"]').fill(password)
     page.get_by_role("button", name="Login").click()
 
-    expect(page.get_by_role("status")).to_contain_text("Login successful")
+    expect(page).to_have_url(re.compile(r".*/dashboard$"), timeout=10_000)
     token = page.evaluate("window.localStorage.getItem('is601.jwt')")
     assert token
 

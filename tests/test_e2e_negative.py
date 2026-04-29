@@ -63,7 +63,7 @@ def register_user(page, email: str, password: str):
     page.locator('input[name="password"]').fill(password)
     page.locator('input[name="confirmPassword"]').fill(password)
     page.get_by_role("button", name="Register").click()
-    expect(page.get_by_role("status")).to_contain_text("Registration successful")
+    expect(page).to_have_url(re.compile(r".*/dashboard$"), timeout=10_000)
 
 
 # ---------------------------------------------------------------------------
