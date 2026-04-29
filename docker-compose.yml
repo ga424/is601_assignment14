@@ -1,11 +1,11 @@
 services:
   db:
     image: postgres:16
-    container_name: module13-db
+    container_name: module14-db
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: module13_db
+      POSTGRES_DB: module14_db
     ports:
       - "55432:5432"
     healthcheck:
@@ -18,12 +18,24 @@ services:
 
   app:
     build: .
-    container_name: module13-app
+    container_name: module14-app
     environment:
-      DATABASE_URL: postgresql://postgres:postgres@db:5432/module13_db
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/module14_db
       JWT_SECRET_KEY: dev-jwt-secret-key-dev-jwt-secret-key
     ports:
       - "8013:8013"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: module14-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5051:80"
     depends_on:
       db:
         condition: service_healthy
