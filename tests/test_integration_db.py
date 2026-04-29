@@ -1,5 +1,6 @@
 from app.database import Base, SessionLocal, engine
-from app.models import Calculation
+from app.models import Calculation, User
+from app.security import hash_password
 
 
 def setup_function():
@@ -10,7 +11,13 @@ def setup_function():
 def test_persist_calculation_row_and_query_back():
     db = SessionLocal()
     try:
+        user = User(email="integration@example.com", password_hash=hash_password("password123"))
+        db.add(user)
+        db.commit()
+        db.refresh(user)
+
         calc = Calculation.create("multiplication", [2, 3, 4])
+        calc.user_id = user.id
         calc.result = calc.get_result()
         db.add(calc)
         db.commit()
