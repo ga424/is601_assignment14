@@ -1,31 +1,51 @@
-# Module 14 - JWT Auth + Calculation API
+# IS601 Assignment 14 — BREAD Calculations API
 
-This project provides a FastAPI service with JWT-based user registration/login, calculation CRUD, PostgreSQL persistence, static login/register pages, Docker support, and CI/CD to Docker Hub.
+This project demonstrates a full-stack implementation of BREAD (Browse, Read, Edit, Add, Delete) endpoints for a user-owned calculations resource, built with FastAPI, PostgreSQL, JWT authentication, and a browser-based dashboard. It includes Playwright end-to-end tests covering positive and negative scenarios, and a CI/CD pipeline that runs all tests and publishes a Docker image to Docker Hub.
 
 ## Quick Links
 
-- [Project docs](docs/README.md)
+- [Docker Hub](https://hub.docker.com/r/ga424/is601_assignment14)
+- [OpenAPI Docs](http://127.0.0.1:8013/docs) *(local)*
 - [Architecture diagrams](docs/C4_ARCHITECTURE.md)
 - [Helper script](start.sh)
-- [Login page](http://127.0.0.1:8013/login)
-- [Register page](http://127.0.0.1:8013/register)
-- [Docker Hub](https://hub.docker.com/r/ga424/is601_assignment14)
 
-## What it does
+## BREAD Endpoints
 
-- Implements user authentication endpoints:
-  - `POST /register`
-  - `POST /login`
-- Implements calculation BREAD endpoints:
-  - `GET /calculations`
-  - `GET /calculations/{id}`
-  - `POST /calculations`
-  - `PUT /calculations/{id}`
-  - `DELETE /calculations/{id}`
-- Preserves legacy calculation endpoint `POST /calculate`
-- Stores users and calculations in PostgreSQL
-- Serves browser login/register pages from the same FastAPI app
-- Exposes OpenAPI docs and a health endpoint
+All calculation endpoints require a valid JWT (`Authorization: Bearer <token>`). Each user can only access their own calculations.
+
+| Operation | Method | Path | Description |
+|-----------|--------|------|-------------|
+| Browse | `GET` | `/calculations` | List all calculations for the logged-in user |
+| Read | `GET` | `/calculations/{id}` | Retrieve a single calculation by ID |
+| Edit | `PUT` | `/calculations/{id}` | Update operation type, inputs, and result |
+| Add | `POST` | `/calculations` | Create a new calculation |
+| Delete | `DELETE` | `/calculations/{id}` | Remove a calculation |
+
+**Authentication endpoints:**
+
+| Method | Path | Description |
+|--------|------|-------------|
+| `POST` | `/register` | Create a new user account, returns JWT |
+| `POST` | `/login` | Authenticate and receive a JWT |
+
+## Front-End Dashboard
+
+The browser dashboard (`/`) lets authenticated users perform all BREAD operations without leaving the page:
+
+- **Browse** — calculations table loads automatically on login
+- **Add** — form accepts operation type and comma-separated numeric inputs
+- **Read** — View button displays calculation details inline
+- **Edit** — Edit button pre-populates the form; saving issues a `PUT` request
+- **Delete** — Delete button prompts for confirmation before removing
+
+Client-side validation rejects non-numeric inputs, single-value inputs (minimum 2 operands required), and mismatched passwords on registration.
+
+## Tests
+
+Playwright E2E tests cover both happy-path and failure scenarios:
+
+- **Positive:** register, login, create, list, view, update, delete calculations
+- **Negative:** duplicate email, wrong password, tampered JWT, non-numeric inputs, single operand, division by zero, cross-user access isolation
 
 ## Setup
 
